@@ -1,5 +1,3 @@
-// C++ program to show the example of server application in 
-// socket programming 
 #include <cstring> 
 #include <iostream> 
 #include <netinet/in.h> 
@@ -48,12 +46,10 @@ class ServerTCP {
 };
 
 int main() { 
-	ServerTCP server;
-    
-    server.configureServerTCP();
-    server.receiveData();
-    server.closeServer();
+	ServerTCP server;    
+    	server.configureServerTCP();
+    	server.receiveData();
+    	server.closeServer();
 
-	
 	return 0; 
 }
