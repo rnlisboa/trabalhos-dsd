@@ -8,13 +8,13 @@
 #define PORT 8080
 using namespace std; 
 
-class Server {
+class ServerTCP {
     private:
         int serverSocket;
         sockaddr_in serverAddress;
     
     public: 
-        Server(){
+        ServerTCP(){
             this->serverSocket = socket(AF_INET, SOCK_STREAM, 0);
             this->serverAddress.sin_family = AF_INET;
             serverAddress.sin_port = htons(PORT);
@@ -22,7 +22,7 @@ class Server {
         }
 
     public:
-        void configureServer(){
+        void configureServerTCP(){
             bind(serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
             listen(serverSocket, 5);
         }
@@ -41,13 +41,19 @@ class Server {
             cout << "Message from client: " << buffer << endl;
         }
 
+    public:
+        void closeServer(){
+            close(this->serverSocket);
+        }
 };
 
-int main() 
-{ 
-	
-	// closing the socket. 
-	//close(serverSocket); 
+int main() { 
+	ServerTCP server;
+    
+    server.configureServerTCP();
+    server.receiveData();
+    server.closeServer();
 
+	
 	return 0; 
 }
