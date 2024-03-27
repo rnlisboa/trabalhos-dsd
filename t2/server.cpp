@@ -3,6 +3,7 @@
 #include <netinet/in.h> 
 #include <sys/socket.h> 
 #include <unistd.h> 
+#include <arpa/inet.h>
 #define PORT 8080
 using namespace std; 
 
@@ -30,13 +31,21 @@ class ServerTCP {
             return accept(serverSocket, nullptr, nullptr);
         }
 
+
     public:
         void receiveData(){
             char buffer[1024] = { 0 };
             int clientSocket = this->clientSocket();
             recv(clientSocket, buffer, sizeof(buffer), 0);
 
-            cout << "Message from client: " << buffer << endl;
+            struct sockaddr_in clientAddr;
+            socklen_t addrLen = sizeof(clientAddr);
+            getpeername(clientSocket, (struct sockaddr*)&clientAddr, &addrLen);
+            char clientIP[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET, &(clientAddr.sin_addr), clientIP, INET_ADDRSTRLEN);
+
+            cout << "IP do cliente: " << clientIP << endl;
+            cout << "Mensagem do cliente: " << buffer << endl;
         }
 
     public:
@@ -46,10 +55,10 @@ class ServerTCP {
 };
 
 int main() { 
-	ServerTCP server;    
-    	server.configureServerTCP();
-    	server.receiveData();
-    	server.closeServer();
+    ServerTCP server;    
+    server.configureServerTCP();
+    server.receiveData();
+    server.closeServer();
 
 	return 0; 
 }

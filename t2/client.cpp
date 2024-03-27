@@ -4,6 +4,8 @@
 #include <sys/socket.h> 
 #include <unistd.h> 
 
+using namespace std;
+
 int main() 
 { 
 	int clientSocket = socket(AF_INET, SOCK_STREAM, 0); 
@@ -16,7 +18,8 @@ int main()
 	connect(clientSocket, (struct sockaddr*)&serverAddress, 
 			sizeof(serverAddress)); 
 
-	const char* message = "Hello, server!"; 
+	char* message;
+	cin >> message; 
 	send(clientSocket, message, strlen(message), 0); 
 
 	close(clientSocket); 
