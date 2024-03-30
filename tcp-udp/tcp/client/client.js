@@ -1,16 +1,25 @@
 var net = require('net');
+process.stdin.setEncoding('utf8');
 
 var client = new net.Socket();
-client.connect(3333, '127.0.0.1', function() {
-	console.log('Connected');
-	client.write('Hello, server! Love, Client.');
+
+// Conectar ao servidor
+client.connect(3333, '127.0.0.1', function () {
+    console.log('Connected');
 });
 
-client.on('data', function(data) {
-	console.log('Received: ' + data);
-	client.destroy(); 
+// Resposta do servidor 
+client.on('data', function (data) {
+    console.log('Received: ' + data);
 });
 
-client.on('close', function() {
-	console.log('Connection closed');
+
+
+process.stdin.on('data', function (input) {
+    input = input.trim();
+    client.write(input);
+});
+
+client.on('close', function () {
+    console.log('Connection closed');
 });
