@@ -4,9 +4,12 @@
 #include <sys/socket.h> 
 #include <unistd.h> 
 #include <arpa/inet.h>
+#include <filesystem>
 #define PORT 8080
 using namespace std; 
 
+namespace fs = std::filesystem;
+std::string path = "./arquivos";
 class ServerTCP {
     private:
         int serverSocket;
@@ -52,12 +55,20 @@ class ServerTCP {
         void closeServer(){
             close(this->serverSocket);
         }
+
+    public:
+        void listarArquivos(){
+            for (const auto &entry : fs::directory_iterator(path)){
+                std::cout << entry.path() << '\n';
+            }
+        }
 };
 
 int main() { 
     ServerTCP server;    
     server.configureServerTCP();
     server.receiveData();
+    server.listarArquivos();
     server.closeServer();
 
 	return 0; 
