@@ -1,10 +1,12 @@
 const dgram = require('dgram');
 
-const mensagem = Buffer.from('SOLICITACAO DO CLIENTE');
 const porta = 4030;
 const enderecoServidor = 'localhost';
 
 const cliente = dgram.createSocket('udp4');
+
+const num = parseInt(Math.random() * 1000);
+const mensagem = Buffer.from(num.toString());
 
 cliente.send(mensagem, porta, enderecoServidor, (err) => {
     if (err) {
@@ -14,11 +16,9 @@ cliente.send(mensagem, porta, enderecoServidor, (err) => {
         console.log('Mensagem enviada com sucesso.');
     }
 });
-
 cliente.on('message', (mensagem, info) => {
     console.log('Mensagem recebida do servidor:', mensagem.toString());
-    console.log('Informações do servidor:', info);
-    cliente.close();
+    console.log('Informações do servidor:', info)
 });
 
 cliente.on('error', (err) => {
