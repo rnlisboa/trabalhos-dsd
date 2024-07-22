@@ -1,11 +1,10 @@
 import Pyro4
 from lista_tarefas import ListaTarefas
-
 def main():
-    daemon = Pyro4.Daemon()
-    ns = Pyro4.locateNS()
+    HOST = '10.25.2.199'
+    daemon = Pyro4.Daemon(host=HOST)
     uri = daemon.register(ListaTarefas)
-    ns.register("lista_tarefas", uri)
+    print(uri)
 
     print("Servidor pronto.")
     daemon.requestLoop()

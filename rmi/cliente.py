@@ -2,7 +2,8 @@ import Pyro4
 from datetime import datetime
 
 def main():
-    lista_tarefas = Pyro4.Proxy("PYRONAME:lista_tarefas")
+    uri = input('informe a uri: ')
+    lista_tarefas = Pyro4.Proxy(uri)
 
     while True:
         print("1. Adicionar tarefa")
