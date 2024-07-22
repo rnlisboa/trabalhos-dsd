@@ -48,6 +48,6 @@ var server = net.createServer(function (socket) {
     });
 });
 
-server.listen(3333, '127.0.0.1', () => {
+server.listen(3333, '10.25.3.129', () => {
     console.log("Servidor funcionando na porta 3333");
 });
