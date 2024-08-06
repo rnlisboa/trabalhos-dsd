@@ -30,7 +30,7 @@ var server = net.createServer(function (socket) {
                     socket.write("0:Arquivo não encontrado\r\n");
                     return;
                 }
-                // Determinar se é um arquivo de imagem
+				
                 const isImage = /\.(png|jpe?g|gif|bmp)$/i.test(filePath);
                 const flag = isImage ? '1' : '2';
                 const message = Buffer.concat([Buffer.from(flag + ':'), fileData]);
