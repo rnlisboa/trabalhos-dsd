@@ -1,24 +1,42 @@
 import Pyro4
+from datetime import datetime
 
 def main():
-    musicas = Pyro4.Proxy("PYRONAME:musicas")  # Cria um proxy para o objeto remoto
+    uri = input('informe a uri: ')
+    lista_tarefas = Pyro4.Proxy(uri)
+
     while True:
-        print("1. Listar músicas")
-        print("2. Tocar música")
-        print("3. Sair")
+        print("1. Adicionar tarefa")
+        print("2. Listar tarefas")
+        print("3. Remover tarefa")
+        print("4. Sair")
         escolha = input("Escolha uma opção: ")
 
         if escolha == '1':
-            playlist = musicas.listar_musicas()
-            for i in playlist:
-                print(f"{i}. {playlist[i]}")
-
-        elif escolha == '2':
-            musica_id = int(input("Digite o ID da música que deseja tocar: "))
-            resultado = musicas.tocar_musica(musica_id)
+            usuario = input("Digite o nome do usuário: ")
+            descricao = input("Digite a descrição da tarefa: ")
+            while True:
+                data_str = input("Digite a data e hora da tarefa (YYYY-MM-DD HH:MM): ")
+                try:
+                    data_hora = datetime.strptime(data_str, "%Y-%m-%d %H:%M")
+                    break
+                except ValueError:
+                    print("Formato de data e hora inválido. Por favor, use o formato YYYY-MM-DD HH:MM.")
+            resultado = lista_tarefas.adicionar_tarefa(usuario, descricao, data_hora)
             print(resultado)
 
+        elif escolha == '2':
+            tarefas = lista_tarefas.listar_tarefas()
+            for tarefa in tarefas:
+                print(tarefa)
+
         elif escolha == '3':
+            usuario = input("Digite o nome do usuário: ")
+            descricao = input("Digite a descrição da tarefa a ser removida: ")
+            resultado = lista_tarefas.remover_tarefa(usuario, descricao)
+            print(resultado)
+
+        elif escolha == '4':
             break
 
         else:

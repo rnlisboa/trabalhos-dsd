@@ -1,14 +1,16 @@
 import Pyro4
-from musicas import Musicas
-
+from lista_tarefas import ListaTarefas
 def main():
-    daemon = Pyro4.Daemon()              # Cria um Daemon Pyro
-    ns = Pyro4.locateNS()                # Localiza o servidor de nomes Pyro
-    uri = daemon.register(Musicas)       # Registra o objeto Musicas como um objeto Pyro
-    ns.register("musicas", uri)          # Registra o objeto com o servidor de nomes
+    HOST = '10.25.2.199'
+    daemon = Pyro4.Daemon(host=HOST)
+    uri = daemon.register(ListaTarefas)
+    print(uri)
 
     print("Servidor pronto.")
-    daemon.requestLoop()  # Entra no loop de atendimento de requisições
+    daemon.requestLoop()
 
 if __name__ == "__main__":
     main()
+
+
+
