@@ -7,26 +7,26 @@
   <name>Archetype - Soap</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-      <dependency>
-          <groupId>javax.xml.ws</groupId>
-          <artifactId>jaxws-api</artifactId>
-          <version>2.3.1</version>
-      </dependency>
-    <!-- https://mvnrepository.com/artifact/jakarta.xml.ws/jakarta.xml.ws-api -->
-      <!-- https://mvnrepository.com/artifact/jakarta.xml.ws/jakarta.xml.ws-api -->
+      <!-- API do Jakarta XML Web Services -->
       <dependency>
           <groupId>jakarta.xml.ws</groupId>
           <artifactId>jakarta.xml.ws-api</artifactId>
-          <version>2.3.2</version>
+          <version>3.0.1</version>
       </dependency>
 
-      <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+      <!-- Implementação de Referência do Jakarta XML Web Services (Metro) -->
       <dependency>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>1.3.1</version>
+          <groupId>com.sun.xml.ws</groupId>
+          <artifactId>jaxws-rt</artifactId>
+          <version>3.0.1</version>
       </dependency>
 
+      <!-- JAXB Runtime -->
+      <dependency>
+          <groupId>org.glassfish.jaxb</groupId>
+          <artifactId>jaxb-runtime</artifactId>
+          <version>3.0.1</version>
+      </dependency>
   </dependencies>
 
   <properties>
@@ -51,6 +51,11 @@
                 <version>3.0.0</version>
                 <configuration>
                     <mainClass>br.soap.Publisher</mainClass>
+                    <arguments>
+                        <argument>--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED</argument>
+                        <argument>--add-opens=java.base/java.lang=ALL-UNNAMED</argument>
+                        <argument>--add-opens=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>

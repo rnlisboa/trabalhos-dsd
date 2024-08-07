@@ -1,11 +1,11 @@
 package br.soap;
 
-import javax.jws.WebService;
+import jakarta.jws.WebService;
 
 @WebService(endpointInterface = "br.soap.HelloInterface")
 public class ServiceImple implements HelloInterface{
     @Override
     public String sayHello(String name) {
-        return "O;la " + name + "!";
+        return "O;la " + "!";
     }
 }
