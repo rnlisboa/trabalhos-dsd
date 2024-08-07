@@ -70,11 +70,16 @@ class Matriz:
 
 matriz = Matriz()
 
-matriz.cria_matriz(13)
+t = int(input('Informe o tamanho do plano cartesiano NxN: '))
+
+if t % 2 == 0: t = t +1
+
+matriz.cria_matriz(t)
 
 try:
-    
-    print("As possíveis coordenadas vão de 6 a -6 para x e 6 a -6 para y \1")
+    matriz.print_matriz()
+
+    print(f"As possíveis coordenadas vão de {t//2} a -{t//2} para x e {t//2} a -{t//2} para y \1")
     print()
     y = int(input("Coordenada do eixo y: "))
     x = int(input("Coordenada do eixo x: "))
