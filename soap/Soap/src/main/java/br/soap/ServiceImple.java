@@ -8,4 +8,9 @@ public class ServiceImple implements HelloInterface{
     public String sayHello(String name) {
         return "O;la " + "!";
     }
+
+    @Override
+    public String informarQuadranteInicial(String frase, int coordX, int CoordY) {
+        return "";
+    }
 }
