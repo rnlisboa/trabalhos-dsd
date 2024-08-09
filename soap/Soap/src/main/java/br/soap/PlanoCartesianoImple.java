@@ -1,31 +1,28 @@
 package br.soap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-
 import jakarta.jws.WebService;
 
 @WebService(endpointInterface = "br.soap.PlanoCartesianoInterface")
 public class PlanoCartesianoImple implements PlanoCartesianoInterface{
 
     private char[][] matriz;
+    private Map<String, int[]> robos;
     private List<int[]> bombas;
-    private int y;
-    private int x;
 
-    
-    
     public PlanoCartesianoImple() {
         this.matriz = new char[0][0];
+        this.robos = new HashMap<>();
         this.bombas = new ArrayList<>();
-        this.y = 0;
-        this.x = 0;
     }
 
     @Override
     public String sayHello(String name) {
-        return "O;la " + "!";
+        return "Olá " + name + "!";
     }
 
     @Override
@@ -57,12 +54,18 @@ public class PlanoCartesianoImple implements PlanoCartesianoInterface{
 
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
-                if (matriz[i][j] == '*') {
-                    System.out.print("\033[31m" + matriz[i][j] + "\033[0m ");
-                } else if (matriz[i][j] == 'O') {
-                    System.out.print("\033[32m" + matriz[i][j] + "\033[0m ");
+                char display = matriz[i][j];
+                for (int[] posicaoRobo : robos.values()) {
+                    if (posicaoRobo[0] == i && posicaoRobo[1] == j) {
+                        display = 'O';
+                    }
+                }
+                if (display == '*') {
+                    System.out.print("\033[31m" + display + "\033[0m ");
+                } else if (display == 'O') {
+                    System.out.print("\033[32m" + display + "\033[0m ");
                 } else {
-                    System.out.print(matriz[i][j] + " ");
+                    System.out.print(display + " ");
                 }
             }
             System.out.println();
@@ -90,56 +93,48 @@ public class PlanoCartesianoImple implements PlanoCartesianoInterface{
     }
 
     @Override
-    public void insertRobot(int eixoY, int eixoX) throws Exception {
+    public void insertRobot(String id, int eixoY, int eixoX) throws Exception {
         int t = matriz.length;
         if (eixoY >= t || eixoX >= t) {
             throw new Exception("As coordenadas não devem ultrapassar os limites.");
         }
 
         int eixo = t / 2;
-        this.y = eixo - eixoY;
-        this.x = eixo - (-eixoX);
-        matriz[eixo - eixoY][eixo - (-eixoX)] = 'O';
+        int[] posicaoRobo = new int[]{eixo - eixoY, eixo - (-eixoX)};
+        robos.put(id, posicaoRobo);
     }
 
     @Override
-    public void moveDown() {
-        moveRobot(y + 1, x);
+    public void moveDown(String id) {
+        moveRobot(id, robos.get(id)[0] + 1, robos.get(id)[1]);
     }
 
     @Override
-    public void moveUp() {
-        moveRobot(y - 1, x);
+    public void moveUp(String id) {
+        moveRobot(id, robos.get(id)[0] - 1, robos.get(id)[1]);
     }
 
     @Override
-    public void moveLeft() {
-        moveRobot(y, x - 1);
+    public void moveLeft(String id) {
+        moveRobot(id, robos.get(id)[0], robos.get(id)[1] - 1);
     }
 
     @Override
-    public void moveRight() {
-        moveRobot(y, x + 1);
+    public void moveRight(String id) {
+        moveRobot(id, robos.get(id)[0], robos.get(id)[1] + 1);
     }
 
-    private void moveRobot(int newY, int newX) {
+    private void moveRobot(String id, int newY, int newX) {
         if (newY >= 0 && newY < matriz.length && newX >= 0 && newX < matriz[0].length) {
-            matriz[y][x] = '*';
-            y = newY;
-            x = newX;
-
             for (int[] bomba : bombas) {
-                if (bomba[0] == y && bomba[1] == x) {
-                    matriz[y][x] = 'B';
+                if (bomba[0] == newY && bomba[1] == newX) {
                     System.out.println("Você encontrou uma bomba!");
                     printMatriz();
                     System.exit(0);
                 }
             }
 
-            matriz[y][x] = 'O';
+            robos.put(id, new int[]{newY, newX});
         }
     }
-
-
 }

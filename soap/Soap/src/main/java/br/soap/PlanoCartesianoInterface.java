@@ -18,17 +18,17 @@ public interface PlanoCartesianoInterface {
     void adicionaBombas(int quantidade, int tamanho);
 
     @WebMethod
-    void insertRobot(int eixoY, int eixoX) throws Exception;
+    void insertRobot(String id, int eixoY, int eixoX) throws Exception;
 
     @WebMethod
-    void moveDown();
+    void moveDown(String id);
 
     @WebMethod
-    void moveUp();
+    void moveUp(String id);
 
     @WebMethod
-    void moveLeft();
+    void moveLeft(String id);
 
     @WebMethod
-    void moveRight();
+    void moveRight(String id);
 }
