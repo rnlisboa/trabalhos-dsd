@@ -7,19 +7,6 @@ wsdl = 'https://probable-space-barnacle-xg6x7prjvp6f965r-8081.app.github.dev/ws/
 client = Client(wsdl=wsdl)
 
 def main():
-    # Solicita o tamanho da matriz ao usuário
-    tamanho = int(input("Informe o tamanho do plano cartesiano NxN: "))
-
-    # Se o tamanho for par, incrementa em 1 para torná-lo ímpar
-    if tamanho % 2 == 0:
-        tamanho += 1
-
-    # Chama o método criaMatriz do serviço SOAP
-    client.service.criaMatriz(tamanho)
-
-    # Calcula a quantidade de bombas
-    quantidade_bombas = (tamanho // 2) * (tamanho // 2)
-    client.service.adicionaBombas(quantidade_bombas, tamanho)
 
     try:
         # Exibe a matriz inicial
@@ -27,7 +14,7 @@ def main():
         print(response)
 
         # Exibe as coordenadas possíveis
-        print(f"As possíveis coordenadas vão de {tamanho // 2} a -{tamanho // 2} para x e y.")
+        # print(f"As possíveis coordenadas vão de {tamanho // 2} a -{tamanho // 2} para x e y.")
         
         # Solicita as coordenadas do robô
         y = int(input("Coordenada do eixo y: "))
