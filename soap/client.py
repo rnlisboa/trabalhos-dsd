@@ -1,8 +1,16 @@
 from zeep import Client
 
-HOST = 'localhost'
-ENDPOINT = 'endpoint'
+# URL do WSDL do serviço SOAP
+wsdl = 'https://stunning-train-gvv47pr5qgxcg96-8081.app.github.dev/ws/hello?wsdl'
 
-client = Client(f'http://localhost:8081/ws/hello')
-result = client.service.printMatriz()
-print(result)
+# Criando o cliente SOAP
+client = Client(wsdl=wsdl)
+
+# Parâmetro a ser passado para o método criaMatriz
+tamanho = 5  # Exemplo de valor
+
+# Chama o método criaMatriz do serviço SOAP
+response = client.service.criaMatriz(tamanho)
+
+# Exibe a resposta
+print(response)
