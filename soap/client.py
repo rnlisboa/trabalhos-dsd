@@ -3,7 +3,6 @@ from zeep import Client
 HOST = 'localhost'
 ENDPOINT = 'endpoint'
 
-client = Client(f'https://{HOST}/{ENDPOINT}')
-result = client.service.GetUser(123) # request user with ID 123
-
-name = result['Username']
+client = Client(f'http://localhost:8081/ws/hello')
+result = client.service.printMatriz()
+print(result)
