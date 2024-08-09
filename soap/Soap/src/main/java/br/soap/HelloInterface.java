@@ -9,5 +9,9 @@ public interface HelloInterface {
     String sayHello(String name);
 
     @WebMethod
+<<<<<<< Updated upstream
     String informarQuadranteInicial(String frase,int coordX, int CoordY);
+=======
+    String informarQuadranteInicial(String frase,String coordX, String CoordY);
+>>>>>>> Stashed changes
 }
