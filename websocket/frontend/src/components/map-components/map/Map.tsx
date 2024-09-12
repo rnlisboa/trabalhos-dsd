@@ -1,33 +1,44 @@
 import React from 'react';
 import "mapbox-gl/dist/mapbox-gl.css";
-import ReactMapGl, { Marker, Source, Layer, ViewState, MapRef } from "react-map-gl";
+import ReactMapGL, { Marker, Source, Layer, ViewState, MapRef } from "react-map-gl";
 import { TOKEN } from '../../../service/mapbox/config';
-import { ViewProps } from '../../../dtos/Map';
-
-
-
+import { Coordinates, ViewProps } from '../../../dtos/Map';
 
 type MapProps = {
     viewport: ViewProps;
     mapRef: React.RefObject<MapRef>;
     route: GeoJSON.FeatureCollection<GeoJSON.Geometry>;
     setViewPort: (value: ViewState) => void;
-
+    coordOrigem: Coordinates | null,
+    coordDestino: Coordinates | null,
 }
 
-function Map({ ...p }: MapProps) {
+function Map({ viewport, mapRef, route, setViewPort, coordOrigem, coordDestino }: MapProps) {
 
     return (
-        <ReactMapGl
-            ref={p.mapRef}
-            initialViewState={{ ...p.viewport }}
+        <ReactMapGL
+            ref={mapRef}
+            initialViewState={{ ...viewport }}
             mapboxAccessToken={TOKEN}
-            mapStyle={"mapbox://styles/mapbox/dark-v11"}
-            onMove={evt => p.setViewPort(evt.viewState)}
+            mapStyle="mapbox://styles/mapbox/dark-v11"
+            onMove={evt => setViewPort(evt.viewState)}
         >
+            {/* Renderização dos Marcadores */}
+            {coordOrigem && (
+                <Marker latitude={coordOrigem.latitude} longitude={coordOrigem.longitude}>
+                    <div style={{ color: 'red' }}>📍</div> {/* Exemplo de ícone */}
+                </Marker>
+            )}
 
-            {p.route && (
-                <Source id="route" type="geojson" data={p.route}>
+            {coordDestino && (
+                <Marker latitude={coordDestino.latitude} longitude={coordDestino.longitude}>
+                    <div style={{ color: 'blue' }}>📍</div> {/* Exemplo de ícone */}
+                </Marker>
+            )}
+
+            {/* Renderização da Rota */}
+            {route && (
+                <Source id="route" type="geojson" data={route}>
                     <Layer
                         id="route"
                         type="line"
@@ -37,13 +48,13 @@ function Map({ ...p }: MapProps) {
                             'line-cap': 'round'
                         }}
                         paint={{
-                            'line-color': '#003C46',
-                            'line-width': 6
+                            'line-color': '#f4f4f4',
+                            'line-width': 10
                         }}
                     />
                 </Source>
             )}
-        </ReactMapGl>
+        </ReactMapGL>
     );
 }
 
