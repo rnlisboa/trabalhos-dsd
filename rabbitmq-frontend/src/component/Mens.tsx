@@ -9,18 +9,12 @@ export default function Mens() {
     const [response, setResponse] = useState<string[]>([""]);
 
     const handleSendMessage = () => {
-        axios.get(`http://localhost:8080/send?message=${messagesend}`)
+        axios.post(`https://glowing-space-disco-9gg7jx5q74qhxwwj-8080.app.github.dev/send?message=${messagesend}`)
         .then(res => setResponse(res.data))
         .catch(err => console.error(err));
 
         setMessageSend('');
     };
-
-    useEffect(() =>{
-          axios.get(`http://localhost:8080/messages`)
-          .then(res => setResponse(res.data))
-          .catch(e => console.error(e));
-    });
     
     return (
         <div>

@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Aplica a todos os endpoints
-                        .allowedOrigins("http://localhost:3000") // Frontend React rodando na porta 3000
+                        .allowedOrigins("https://glowing-space-disco-9gg7jx5q74qhxwwj-3000.app.github.dev") // Frontend React rodando na porta 3000
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

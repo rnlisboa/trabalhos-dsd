@@ -6,6 +6,8 @@ import br.dsd.filamensagens.service.Produtor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,8 +21,10 @@ public class RabbitMQController {
 
      private final List<String> messages = new ArrayList<>();
 
-    @GetMapping("/send")
-    public String sendMessage(String message) {
+    @PostMapping("/send")
+    public String sendMessage(@RequestParam(value = "message",
+    required = false,
+    defaultValue = "valeu pessoal") String message) {
         System.out.println("Mensagem enviada: " + message);
         return produtor.disparoAutomatico(message);
     }

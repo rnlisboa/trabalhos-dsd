@@ -7,7 +7,7 @@ export default function Cons() {
     const [response, setResponse] = useState<string[]>([""]);
 
     useEffect(() =>{
-        axios.get(`http://localhost:8080/messages`)
+        axios.get(`https://glowing-space-disco-9gg7jx5q74qhxwwj-8080.app.github.dev/messages`)
         .then(res => setResponse(res.data))
         .catch(e => console.error(e));
   });
