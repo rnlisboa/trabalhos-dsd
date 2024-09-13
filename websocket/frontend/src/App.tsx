@@ -3,16 +3,22 @@ import './App.css';
 import Map from './components/map-components/map/Map';
 import { MapRef } from 'react-map-gl';
 import { Coordinates, ViewProps } from './dtos/Map';
+import getRoute from './service/mapbox/getRoute';
 
 function App() {
   const mapRef = useRef<MapRef>(null);
   const [currLocalization, setCurrLocalization] = useState<Coordinates | null>(null);
-  const [destLocalization] = useState<Coordinates | null>({
+  const [destLocalization] = useState<Coordinates>({
     latitude: -5.811015200049461,
     longitude: -35.20270531534165
   });
   const [route, setRoute] = useState<any>(null);
   const [viewport, setViewport] = useState<ViewProps | null>(null);
+
+  const getCurrRoute = async (data: Coordinates) => {
+    const resp = await getRoute(data, destLocalization);
+    setRoute(resp)
+  }
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8080');
@@ -23,8 +29,7 @@ function App() {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log('Received coordinates: ', data);
-
+      //getCurrRoute(data);
       // Atualizar localização e viewport
       setCurrLocalization({
         latitude: data.latitude,

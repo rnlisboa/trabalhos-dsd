@@ -1,1 +1,3 @@
-
+/backend/distance-service/node_modules/
+/backend/route-service/node_modules/
+/backend/gateway/node_modules/

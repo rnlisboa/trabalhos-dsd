@@ -3,7 +3,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import ReactMapGL, { Marker, Source, Layer, ViewState, MapRef } from "react-map-gl";
 import { TOKEN } from '../../../service/mapbox/config';
 import { Coordinates, ViewProps } from '../../../dtos/Map';
-
+import cat from "../../../assets/car.png"
 type MapProps = {
     viewport: ViewProps;
     mapRef: React.RefObject<MapRef>;
@@ -26,13 +26,13 @@ function Map({ viewport, mapRef, route, setViewPort, coordOrigem, coordDestino }
             {/* Renderização dos Marcadores */}
             {coordOrigem && (
                 <Marker latitude={coordOrigem.latitude} longitude={coordOrigem.longitude}>
-                    <div style={{ color: 'red' }}>📍</div> {/* Exemplo de ícone */}
+                    <img width={'80rem'} src={cat} alt="" />
                 </Marker>
             )}
 
             {coordDestino && (
                 <Marker latitude={coordDestino.latitude} longitude={coordDestino.longitude}>
-                    <div style={{ color: 'blue' }}>📍</div> {/* Exemplo de ícone */}
+                    <div style={{ color: 'blue', fontSize: '2rem' }}>📍</div> {/* Exemplo de ícone */}
                 </Marker>
             )}
 
@@ -49,7 +49,7 @@ function Map({ viewport, mapRef, route, setViewPort, coordOrigem, coordDestino }
                         }}
                         paint={{
                             'line-color': '#f4f4f4',
-                            'line-width': 10
+                            'line-width': 5
                         }}
                     />
                 </Source>
