@@ -11,9 +11,10 @@ type MapProps = {
     setViewPort: (value: ViewState) => void;
     coordOrigem: Coordinates | null,
     coordDestino: Coordinates | null,
+    distance: number;
 }
 
-function Map({ viewport, mapRef, route, setViewPort, coordOrigem, coordDestino }: MapProps) {
+function Map({ viewport, mapRef, route, setViewPort, coordOrigem, coordDestino,distance }: MapProps) {
 
     return (
         <ReactMapGL
@@ -26,7 +27,10 @@ function Map({ viewport, mapRef, route, setViewPort, coordOrigem, coordDestino }
             {/* Renderização dos Marcadores */}
             {coordOrigem && (
                 <Marker latitude={coordOrigem.latitude} longitude={coordOrigem.longitude}>
-                    <img width={'80rem'} src={cat} alt="" />
+                    <div style={{ color: 'blue', fontSize: '2rem' }}>📍</div>
+                    <div style={{color: '#f4f4f4', fontSize: '2rem'}}>
+                        {distance >= 1000 ? `${distance} km` : `${distance} m`}
+                    </div>
                 </Marker>
             )}
 

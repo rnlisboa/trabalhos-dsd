@@ -22,7 +22,7 @@ router.get('/', getDistance)
 export { router };
 
 
-function calcularDistancia(lat1: number, lon1: number, lat2: number, lon2: number): string {
+function calcularDistancia(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
@@ -38,8 +38,8 @@ function calcularDistancia(lat1: number, lon1: number, lat2: number, lon2: numbe
     const distanciaMetros = distanciaKm * 1000;
 
     if (distanciaMetros >= 1000) {
-        return `${distanciaKm.toFixed(1)} km`;
+        return Number( distanciaKm.toFixed(1))
     } else {
-        return `${Math.round(distanciaMetros)} m`;
+        return Math.round(distanciaMetros)
     }
 }

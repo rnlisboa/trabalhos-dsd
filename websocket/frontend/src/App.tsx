@@ -4,10 +4,14 @@ import Map from './components/map-components/map/Map';
 import { MapRef } from 'react-map-gl';
 import { Coordinates, ViewProps } from './dtos/Map';
 import getRoute from './service/mapbox/getRoute';
+import ApiService from './service/gateway/apiService';
 
 function App() {
+  const service: ApiService = new ApiService();
   const mapRef = useRef<MapRef>(null);
   const [currLocalization, setCurrLocalization] = useState<Coordinates | null>(null);
+  const [distance, setDistance] = useState<number>(0);
+
   const [destLocalization] = useState<Coordinates>({
     latitude: -5.811015200049461,
     longitude: -35.20270531534165
@@ -16,8 +20,13 @@ function App() {
   const [viewport, setViewport] = useState<ViewProps | null>(null);
 
   const getCurrRoute = async (data: Coordinates) => {
-    const resp = await getRoute(data, destLocalization);
-    setRoute(resp)
+    const resp = await service.getRoute(data.latitude, data.longitude, destLocalization.latitude, destLocalization.longitude);
+    setRoute(resp.data.result.rota.routes[0].geometry)
+  }
+
+  const getCurrDistance = async (data: Coordinates) => {
+    const resp = await service.getDistance(data.latitude, data.longitude, destLocalization.latitude, destLocalization.longitude);
+    setDistance(resp.data.result.distancia)
   }
 
   useEffect(() => {
@@ -31,6 +40,8 @@ function App() {
       const data = JSON.parse(event.data);
       getCurrRoute(data);
       // Atualizar localização e viewport
+
+      getCurrDistance(data);
       setCurrLocalization({
         latitude: data.latitude,
         longitude: data.longitude
@@ -51,7 +62,6 @@ function App() {
       console.error('WebSocket error: ', error);
     };
 
-    // Limpeza ao desmontar o componente
     return () => {
       ws.close();
     };
@@ -68,6 +78,7 @@ function App() {
             route={route}
             coordOrigem={currLocalization}
             coordDestino={destLocalization}
+            distance={distance}
           />
         )}
       </div>
