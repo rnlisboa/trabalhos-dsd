@@ -15,7 +15,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 app.use(express.json());
 
-app.use('/api', router);
+app.use('/distance', router);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

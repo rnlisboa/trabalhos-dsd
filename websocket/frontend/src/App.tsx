@@ -29,7 +29,7 @@ function App() {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      //getCurrRoute(data);
+      getCurrRoute(data);
       // Atualizar localização e viewport
       setCurrLocalization({
         latitude: data.latitude,
