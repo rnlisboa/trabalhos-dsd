@@ -14,10 +14,19 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Aplica a todos os endpoints
-                        .allowedOrigins("https://glowing-space-disco-9gg7jx5q74qhxwwj-3000.app.github.dev") // Frontend React rodando na porta 3000
+                        .allowedOriginPatterns("*")// Frontend React rodando na porta 3000
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowedHeaders("Accept", "Referer", "User-Agent", "Authorization", "X-Organizacao-ID",
+			             "Organizacao-Id", "Origin", "X-Requested-With", "Content-Type", "Accept", "Sec-Fetch-Mode", "x-ijt",
+			             "Content-Type")
+                        .allowCredentials(true)
+                        .maxAge(3600);
+                                
+                // registry.addMapping("/**") // Aplica a todos os endpoints
+                //         .allowedOrigins("https://glowing-space-disco-9gg7jx5q74qhxwwj-3000.app.github.dev") // Frontend React rodando na porta 3000
+                //         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                //         .allowedHeaders("*")
+                //         .allowCredentials(true);
             }
         };
     }
